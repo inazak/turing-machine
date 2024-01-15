@@ -16,16 +16,10 @@ func TestBinaryIncrement(t *testing.T) {
 	ma.AddRule(rule.New(3, BLC, 4, '1', "Right", "tape setup"))
 	ma.AddRule(rule.New(4, '0', 4, '0', "Right", "tape setup"))
 	ma.AddRule(rule.New(4, '1', 4, '1', "Right", "tape setup"))
-	ma.AddRule(rule.New(4, BLC, 100, BLC, "Left", "tape setup"))
+	ma.AddRule(rule.New(4, BLC, 5, BLC, "Left", "tape setup"))
 
-	ma.AddRule(rule.New(100, '0', 101, '1', "Right", "binary increment"))
-	ma.AddRule(rule.New(100, '1', 100, '0', "Left", "binary increment"))
-	ma.AddRule(rule.New(100, BLC, 101, '1', "Right", "binary increment"))
-	ma.AddRule(rule.New(101, '0', 101, '0', "Right", "binary increment"))
-	ma.AddRule(rule.New(101, '1', 101, '1', "Right", "binary increment"))
-	ma.AddRule(rule.New(101, BLC, 102, BLC, "Left", "binary increment"))
-
-	ma.Run(100)
+	ma.Run(-1)
+	ma.ClearRuleAndState()
 
 	if ma.Tape() != "1011_" {
 		t.Errorf("unexpected tape dump, got=%s", ma.Tape())
@@ -33,6 +27,13 @@ func TestBinaryIncrement(t *testing.T) {
 	if ma.HeadIndex() != 3 {
 		t.Errorf("unexpected tape index, got=%d", ma.HeadIndex())
 	}
+
+	ma.AddRule(rule.New(0, '0', 1, '1', "Right", "binary increment"))
+	ma.AddRule(rule.New(0, '1', 0, '0', "Left", "binary increment"))
+	ma.AddRule(rule.New(0, BLC, 1, '1', "Right", "binary increment"))
+	ma.AddRule(rule.New(1, '0', 1, '0', "Right", "binary increment"))
+	ma.AddRule(rule.New(1, '1', 1, '1', "Right", "binary increment"))
+	ma.AddRule(rule.New(1, BLC, 2, BLC, "Left", "binary increment"))
 
 	ma.Run(-1)
 

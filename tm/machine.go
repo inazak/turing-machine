@@ -27,6 +27,11 @@ func (m *Machine) AddRule(r *rule.Rule) error {
 	return nil
 }
 
+func (m *Machine) ClearRuleAndState() {
+	m.conf = make(map[string]*rule.Rule)
+	m.state = 0
+}
+
 func (m *Machine) Step() bool {
 	key := rule.CalculateKey(m.state, m.tape.Read())
 	r, ok := m.conf[key]
