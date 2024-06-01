@@ -73,7 +73,7 @@ func (l *Lexer) readKeyword() (bool, string) {
 	for p < len(l.text) && 'a' <= l.text[p] && l.text[p] <= 'z' {
 		p += 1
 	}
-	if p < len(l.text) && ( l.text[p] == '-' || l.text[p] == '_' ) {
+	if p < len(l.text) && (l.text[p] == '-' || l.text[p] == '_') {
 		return false, ""
 	}
 	w := string(l.text[l.currPosition:p])
